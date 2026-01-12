@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Okinawa 4-Day Road Trip | 沖繩自駕遊</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #f0f9ff; }
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .tab-active { background-color: #0284c7; color: white; transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+        .timeline-line::before { content: ''; position: absolute; left: 20px; top: 0; bottom: 0; width: 2px; background: #bae6fd; }
+    </style>
+</head>
+<body class="text-slate-800 pb-20">
+
+    <header class="relative h-64 flex items-center justify-center text-white overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&q=80&w=1200" class="absolute inset-0 w-full h-full object-cover brightness-75" alt="Okinawa">
+        <div class="relative text-center z-10 px-4">
+            <h1 class="text-4xl font-bold mb-2 tracking-wide">沖繩自駕 · 4人同行</h1>
+            <p class="text-lg opacity-90">2026.02.20 - 02.24 | Blue Sea & Cherry Blossoms</p>
+        </div>
+    </header>
+
+    <div class="sticky top-0 z-50 py-4 px-2 flex justify-between gap-2 overflow-x-auto glass-card mb-6">
+        <button onclick="showDay(1)" id="btn-1" class="tab-btn flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all duration-300 flex flex-col items-center">
+            <span>D1</span><span class="text-xs font-normal">02/20</span>
+        </button>
+        <button onclick="showDay(2)" id="btn-2" class="tab-btn flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all duration-300 flex flex-col items-center">
+            <span>D2</span><span class="text-xs font-normal">02/21</span>
+        </button>
+        <button onclick="showDay(3)" id="btn-3" class="tab-btn flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all duration-300 flex flex-col items-center">
+            <span>D3</span><span class="text-xs font-normal">02/22</span>
+        </button>
+        <button onclick="showDay(4)" id="btn-4" class="tab-btn flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all duration-300 flex flex-col items-center">
+            <span>D4</span><span class="text-xs font-normal">02/23</span>
+        </button>
+        <button onclick="showDay(5)" id="btn-5" class="tab-btn flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all duration-300 flex flex-col items-center">
+            <span>D5</span><span class="text-xs font-normal">02/24</span>
+        </button>
+    </div>
+
+    <main class="max-w-2xl mx-auto px-4">
+        <div id="itinerary-content" class="relative timeline-line space-y-8 pl-4">
+            </div>
+    </main>
+
+    <script>
+        const schedule = {
+            1: [
+                { time: "09:15", type: "抵達", title: "那霸機場 (OKA)", note: "辦理入境手續", icon: "plane-landing" },
+                { time: "10:30", type: "交通", title: "租車公司取車", note: "預約接駁車，建議 7 人座車型", icon: "car" },
+                { time: "12:30", type: "午餐", title: "奧武島 中本天婦羅", note: "南城市美食，海邊戶外用餐", icon: "utensils" },
+                { time: "14:30", type: "景點", title: "玉泉洞 & 王國村", note: "鐘乳石洞與大鼓舞表演", icon: "map-pin" },
+                { time: "17:00", type: "景點", title: "瀨長島 Umikaji Terrace", note: "看日落、飛機起降", icon: "camera" },
+                { time: "19:30", type: "晚餐", title: "琉球的牛 (那霸店)", note: "建議提前預約燒肉", icon: "flame" }
+            ],
+            2: [
+                { time: "09:30", type: "景點", title: "波上宮", note: "崖上神社，旁邊有波之上海灘", icon: "landmark" },
+                { time: "11:30", type: "景點", title: "萬座毛", note: "象鼻岩景觀 (門票 100 日圓)", icon: "map-pin" },
+                { time: "13:00", type: "午餐", title: "元祖恩納蕎麥麵", note: "道地沖繩麵與炊飯", icon: "utensils" },
+                { time: "15:00", type: "景點", title: "殘波岬燈塔", note: "白色燈塔與壯闊斷崖", icon: "navigation" },
+                { time: "17:00", type: "景點", title: "美國村", note: "異國風情遊街、日落散步", icon: "shopping-bag" }
+            ],
+            3: [
+                { time: "09:30", type: "景點", title: "美麗海水族館", note: "必看黑潮之海鯨鯊餵食秀", icon: "waves" },
+                { time: "12:30", type: "午餐", title: "岸本食堂", note: "限量手工沖繩麵", icon: "utensils" },
+                { time: "14:30", type: "景點", title: "今歸仁城跡", note: "2月限定櫻花與古城遺址", icon: "flower" },
+                { time: "16:30", type: "景點", title: "古宇利大橋 & 心形岩", note: "最美海中大橋與心形石灘", icon: "heart" },
+                { time: "19:00", type: "晚餐", title: "燒肉五苑 (名護店)", note: "4人吃到飽燒肉首選", icon: "flame" }
+            ],
+            4: [
+                { time: "09:00", type: "體驗", title: "冬季限定賞鯨行程", note: "2月必訪，預約那霸或北部出發", icon: "ship" },
+                { time: "13:00", type: "午餐", title: "港川外人住宅區", note: "文青彩虹屋，必吃水果塔", icon: "coffee" },
+                { time: "15:00", type: "景點", title: "首里城", note: "琉球王國歷史，正殿修復中", icon: "landmark" },
+                { time: "17:00", type: "景點", title: "國際通", note: "伴手禮採買，逛土產店", icon: "gift" },
+                { time: "19:30", type: "晚餐", title: "國際通屋台村", note: "4人分食多樣化美食", icon: "beer" }
+            ],
+            5: [
+                { time: "10:00", type: "景點", title: "Outlet Ashibinaa", note: "品牌折扣採買", icon: "shopping-cart" },
+                { time: "13:00", type: "午餐", title: "通堂拉麵 (小祿店)", note: "男味、女味特色拉麵", icon: "utensils" },
+                { time: "15:00", type: "景點", title: "iias 沖繩豐崎商場", note: "最後補貨或逛 DMM 水族館", icon: "palmtree" },
+                { time: "17:30", type: "交通", title: "租車公司還車", note: "記得加滿油，預留接駁時間", icon: "car" },
+                { time: "18:20", type: "報到", title: "那霸機場櫃檯", note: "20:20 航班起飛", icon: "plane-takeoff" }
+            ]
+        };
+
+        function showDay(day) {
+            // Update Buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('tab-active'));
+            document.getElementById(`btn-${day}`).classList.add('tab-active');
+
+            // Update Content
+            const container = document.getElementById('itinerary-content');
+            container.innerHTML = schedule[day].map((item, index) => `
+                <div class="relative pl-10 opacity-0 animate-fade-in" style="animation: fadeIn 0.5s ease forwards ${index * 0.1}s">
+                    <div class="absolute left-[-4px] top-1 w-10 h-10 rounded-full bg-sky-500 flex items-center justify-center text-white ring-4 ring-white shadow-md">
+                        <i data-lucide="${item.icon}" class="w-5 h-5"></i>
+                    </div>
+                    <div class="glass-card rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-sky-600 font-bold text-lg">${item.time}</span>
+                            <span class="px-2 py-1 bg-sky-100 text-sky-700 text-xs rounded-lg font-medium">${item.type}</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-1">${item.title}</h3>
+                        <p class="text-slate-500 text-sm italic">${item.note}</p>
+                    </div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        // Animation Styles
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateX(-10px); }
+                to { opacity: 1; transform: translateX(0); }
+            }
+            .animate-fade-in { animation-fill-mode: forwards; }
+        `;
+        document.head.appendChild(style);
+
+        // Initial Show
+        showDay(1);
+    </script>
+</body>
+</html>
