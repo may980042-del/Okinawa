@@ -3,128 +3,337 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Okinawa 4-Day Road Trip | 沖繩自駕遊</title>
+    <title>沖繩自駕全攻略手冊 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { font-family: 'Noto Sans TC', sans-serif; background-color: #f0f9ff; }
-        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); }
-        .tab-active { background-color: #0284c7; color: white; transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
-        .timeline-line::before { content: ''; position: absolute; left: 20px; top: 0; bottom: 0; width: 2px; background: #bae6fd; }
-    </style>
-</head>
-<body class="text-slate-800 pb-20">
-
-    <header class="relative h-64 flex items-center justify-center text-white overflow-hidden">
-        <img src="https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&q=80&w=1200" class="absolute inset-0 w-full h-full object-cover brightness-75" alt="Okinawa">
-        <div class="relative text-center z-10 px-4">
-            <h1 class="text-4xl font-bold mb-2 tracking-wide">沖繩自駕 · 4人同行</h1>
-            <p class="text-lg opacity-90">2026.02.20 - 02.24 | Blue Sea & Cherry Blossoms</p>
-        </div>
-    </header>
-
-    <div class="sticky top-0 z-50 py-4 px-2 flex justify-between gap-2 overflow-x-auto glass-card mb-6">
-        <button onclick="showDay(1)" id="btn-1" class="tab-btn flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all duration-300 flex flex-col items-center">
-            <span>D1</span><span class="text-xs font-normal">02/20</span>
-        </button>
-        <button onclick="showDay(2)" id="btn-2" class="tab-btn flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all duration-300 flex flex-col items-center">
-            <span>D2</span><span class="text-xs font-normal">02/21</span>
-        </button>
-        <button onclick="showDay(3)" id="btn-3" class="tab-btn flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all duration-300 flex flex-col items-center">
-            <span>D3</span><span class="text-xs font-normal">02/22</span>
-        </button>
-        <button onclick="showDay(4)" id="btn-4" class="tab-btn flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all duration-300 flex flex-col items-center">
-            <span>D4</span><span class="text-xs font-normal">02/23</span>
-        </button>
-        <button onclick="showDay(5)" id="btn-5" class="tab-btn flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all duration-300 flex flex-col items-center">
-            <span>D5</span><span class="text-xs font-normal">02/24</span>
-        </button>
-    </div>
-
-    <main class="max-w-2xl mx-auto px-4">
-        <div id="itinerary-content" class="relative timeline-line space-y-8 pl-4">
-            </div>
-    </main>
-
-    <script>
-        const schedule = {
-            1: [
-                { time: "09:15", type: "抵達", title: "那霸機場 (OKA)", note: "辦理入境手續", icon: "plane-landing" },
-                { time: "10:30", type: "交通", title: "租車公司取車", note: "預約接駁車，建議 7 人座車型", icon: "car" },
-                { time: "12:30", type: "午餐", title: "奧武島 中本天婦羅", note: "南城市美食，海邊戶外用餐", icon: "utensils" },
-                { time: "14:30", type: "景點", title: "玉泉洞 & 王國村", note: "鐘乳石洞與大鼓舞表演", icon: "map-pin" },
-                { time: "17:00", type: "景點", title: "瀨長島 Umikaji Terrace", note: "看日落、飛機起降", icon: "camera" },
-                { time: "19:30", type: "晚餐", title: "琉球的牛 (那霸店)", note: "建議提前預約燒肉", icon: "flame" }
-            ],
-            2: [
-                { time: "09:30", type: "景點", title: "波上宮", note: "崖上神社，旁邊有波之上海灘", icon: "landmark" },
-                { time: "11:30", type: "景點", title: "萬座毛", note: "象鼻岩景觀 (門票 100 日圓)", icon: "map-pin" },
-                { time: "13:00", type: "午餐", title: "元祖恩納蕎麥麵", note: "道地沖繩麵與炊飯", icon: "utensils" },
-                { time: "15:00", type: "景點", title: "殘波岬燈塔", note: "白色燈塔與壯闊斷崖", icon: "navigation" },
-                { time: "17:00", type: "景點", title: "美國村", note: "異國風情遊街、日落散步", icon: "shopping-bag" }
-            ],
-            3: [
-                { time: "09:30", type: "景點", title: "美麗海水族館", note: "必看黑潮之海鯨鯊餵食秀", icon: "waves" },
-                { time: "12:30", type: "午餐", title: "岸本食堂", note: "限量手工沖繩麵", icon: "utensils" },
-                { time: "14:30", type: "景點", title: "今歸仁城跡", note: "2月限定櫻花與古城遺址", icon: "flower" },
-                { time: "16:30", type: "景點", title: "古宇利大橋 & 心形岩", note: "最美海中大橋與心形石灘", icon: "heart" },
-                { time: "19:00", type: "晚餐", title: "燒肉五苑 (名護店)", note: "4人吃到飽燒肉首選", icon: "flame" }
-            ],
-            4: [
-                { time: "09:00", type: "體驗", title: "冬季限定賞鯨行程", note: "2月必訪，預約那霸或北部出發", icon: "ship" },
-                { time: "13:00", type: "午餐", title: "港川外人住宅區", note: "文青彩虹屋，必吃水果塔", icon: "coffee" },
-                { time: "15:00", type: "景點", title: "首里城", note: "琉球王國歷史，正殿修復中", icon: "landmark" },
-                { time: "17:00", type: "景點", title: "國際通", note: "伴手禮採買，逛土產店", icon: "gift" },
-                { time: "19:30", type: "晚餐", title: "國際通屋台村", note: "4人分食多樣化美食", icon: "beer" }
-            ],
-            5: [
-                { time: "10:00", type: "景點", title: "Outlet Ashibinaa", note: "品牌折扣採買", icon: "shopping-cart" },
-                { time: "13:00", type: "午餐", title: "通堂拉麵 (小祿店)", note: "男味、女味特色拉麵", icon: "utensils" },
-                { time: "15:00", type: "景點", title: "iias 沖繩豐崎商場", note: "最後補貨或逛 DMM 水族館", icon: "palmtree" },
-                { time: "17:30", type: "交通", title: "租車公司還車", note: "記得加滿油，預留接駁時間", icon: "car" },
-                { time: "18:20", type: "報到", title: "那霸機場櫃檯", note: "20:20 航班起飛", icon: "plane-takeoff" }
-            ]
-        };
-
-        function showDay(day) {
-            // Update Buttons
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('tab-active'));
-            document.getElementById(`btn-${day}`).classList.add('tab-active');
-
-            // Update Content
-            const container = document.getElementById('itinerary-content');
-            container.innerHTML = schedule[day].map((item, index) => `
-                <div class="relative pl-10 opacity-0 animate-fade-in" style="animation: fadeIn 0.5s ease forwards ${index * 0.1}s">
-                    <div class="absolute left-[-4px] top-1 w-10 h-10 rounded-full bg-sky-500 flex items-center justify-center text-white ring-4 ring-white shadow-md">
-                        <i data-lucide="${item.icon}" class="w-5 h-5"></i>
-                    </div>
-                    <div class="glass-card rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow">
-                        <div class="flex justify-between items-start mb-2">
-                            <span class="text-sky-600 font-bold text-lg">${item.time}</span>
-                            <span class="px-2 py-1 bg-sky-100 text-sky-700 text-xs rounded-lg font-medium">${item.type}</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-slate-800 mb-1">${item.title}</h3>
-                        <p class="text-slate-500 text-sm italic">${item.note}</p>
-                    </div>
-                </div>
-            `).join('');
-            lucide.createIcons();
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+        
+        :root {
+            --primary: #0ea5e9;
+            --accent: #f43f5e;
+            --bg-gradient: linear-gradient(135deg, #e0f2fe 0%, #f1f5f9 100%);
         }
 
-        // Animation Styles
-        const style = document.createElement('style');
-        style.innerHTML = `
-            @keyframes fadeIn {
-                from { opacity: 0; transform: translateX(-10px); }
-                to { opacity: 1; transform: translateX(0); }
-            }
-            .animate-fade-in { animation-fill-mode: forwards; }
-        `;
-        document.head.appendChild(style);
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: #334155;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-        // Initial Show
-        showDay(1);
+        /* 毛玻璃質感 */
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+        }
+
+        .active-tab {
+            color: var(--primary);
+            background: rgba(14, 165, 233, 0.1);
+            border-radius: 16px;
+        }
+
+        .day-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+        }
+
+        /* 機票卡片特殊效果 */
+        .flight-card {
+            background: linear-gradient(135deg, #075985 0%, #0369a1 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .flight-card::after {
+            content: '\f0fb';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            right: -20px;
+            bottom: -20px;
+            font-size: 100px;
+            opacity: 0.1;
+            transform: rotate(-45deg);
+        }
+
+        /* 隱藏滾動條 */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* 動畫 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade { animation: fadeIn 0.4s ease-out forwards; }
+
+        /* 自定義 Checkbox */
+        .custom-checkbox:checked + label {
+            text-decoration: line-through;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body class="pb-28 lg:pb-12">
+
+    <!-- 頂部 Header -->
+    <header class="p-6 max-w-2xl mx-auto text-center">
+        <div class="inline-block bg-sky-500 text-white text-[10px] font-black px-3 py-1 rounded-full mb-3 tracking-widest">
+            FEB 20 - FEB 24, 2026
+        </div>
+        <h1 class="text-4xl font-black text-slate-800 tracking-tight mb-2">OKINAWA <span class="text-sky-500">TRIP</span></h1>
+        <p class="text-slate-500 font-medium">沖繩自駕攻略手冊</p>
+    </header>
+
+    <main class="max-w-2xl mx-auto px-4 space-y-6">
+        
+        <!-- 機票資訊卡片 (根據 IT230/IT231 製作) -->
+        <section id="flight-info" class="animate-fade">
+            <div class="flight-card rounded-[32px] p-6 shadow-xl">
+                <div class="flex justify-between items-center mb-6">
+                    <div class="flex items-center gap-2">
+                        <img src="https://www.tigerairtw.com/favicon.ico" class="w-6 h-6 rounded-full" alt="TigerAir">
+                        <span class="font-bold tracking-wider">TIGERAIR TAIWAN</span>
+                    </div>
+                    <div class="text-xs font-bold opacity-80">ECONOMY CLASS</div>
+                </div>
+                
+                <div class="flex justify-between items-center relative">
+                    <div class="text-center">
+                        <h2 class="text-3xl font-black">TPE</h2>
+                        <p class="text-[10px] opacity-70">TAIPEI</p>
+                    </div>
+                    <div class="flex-1 flex flex-col items-center px-4">
+                        <div class="text-[10px] font-bold mb-1 italic">IT 230</div>
+                        <div class="w-full h-[2px] bg-white/30 relative">
+                            <div class="absolute -top-1 right-0"><i class="fas fa-plane text-[10px]"></i></div>
+                        </div>
+                        <div class="text-[10px] mt-1">1h 25m</div>
+                    </div>
+                    <div class="text-center">
+                        <h2 class="text-3xl font-black">OKA</h2>
+                        <p class="text-[10px] opacity-70">OKINAWA</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 mt-8 pt-6 border-t border-white/10">
+                    <div>
+                        <p class="text-[10px] opacity-60 uppercase font-bold">Departure</p>
+                        <p class="font-bold">Feb 20, 06:35</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[10px] opacity-60 uppercase font-bold">Return (IT 231)</p>
+                        <p class="font-bold">Feb 24, 10:10</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 行程詳解容器 -->
+        <section id="overview" class="content-section animate-fade">
+            <div class="flex gap-3 mb-6 overflow-x-auto no-scrollbar py-2">
+                <button onclick="showDay(1)" id="day1-btn" class="day-btn active shrink-0 px-6 py-3 rounded-2xl font-black transition-all glass">D1</button>
+                <button onclick="showDay(2)" id="day2-btn" class="day-btn shrink-0 px-6 py-3 rounded-2xl font-black transition-all glass">D2</button>
+                <button onclick="showDay(3)" id="day3-btn" class="day-btn shrink-0 px-6 py-3 rounded-2xl font-black transition-all glass">D3</button>
+                <button onclick="showDay(4)" id="day4-btn" class="day-btn shrink-0 px-6 py-3 rounded-2xl font-black transition-all glass">D4</button>
+                <button onclick="showDay(5)" id="day5-btn" class="day-btn shrink-0 px-6 py-3 rounded-2xl font-black transition-all glass">D5</button>
+            </div>
+            <div id="day-content" class="space-y-4"></div>
+        </section>
+
+        <!-- 必備清單 Section -->
+        <section id="packing" class="content-section hidden animate-fade">
+            <h2 class="text-2xl font-black mb-6 px-2"><i class="fas fa-list-check text-sky-500 mr-2"></i> 必備清單</h2>
+            <div id="packing-container" class="space-y-4">
+                <!-- 由 JS 動態加載 -->
+            </div>
+        </section>
+
+        <!-- 常用日文 Section -->
+        <section id="japanese" class="content-section hidden animate-fade">
+            <h2 class="text-2xl font-black mb-6 px-2"><i class="fas fa-comments text-rose-500 mr-2"></i> 實用對話</h2>
+            <div id="japanese-container" class="space-y-4">
+                <!-- 由 JS 動態加載 -->
+            </div>
+        </section>
+
+        <!-- 注意事項 Section -->
+        <section id="tips" class="content-section hidden animate-fade">
+            <h2 class="text-2xl font-black mb-6 px-2"><i class="fas fa-circle-exclamation text-amber-500 mr-2"></i> 注意事項</h2>
+            <div class="glass p-6 rounded-[32px] space-y-4">
+                <div class="border-l-4 border-sky-500 pl-4">
+                    <h4 class="font-bold text-slate-800">右駕守則</h4>
+                    <p class="text-sm text-slate-500">轉彎記住「左小右大」，看到止まれ務必停三秒。</p>
+                </div>
+                <div class="border-l-4 border-amber-500 pl-4">
+                    <h4 class="font-bold text-slate-800">還車提醒</h4>
+                    <p class="text-sm text-slate-500">還車前需至指定加油站加滿油 (Regular)，並保留收據。</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 底部導覽列 (Mobile Friendly) -->
+    <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-md glass rounded-[32px] p-2 flex justify-around items-center z-50 shadow-2xl">
+        <button onclick="showSection('overview')" id="nav-overview" class="flex flex-col items-center p-3 active-tab transition-all">
+            <i class="fas fa-map-marked-alt text-xl"></i>
+            <span class="text-[9px] font-black mt-1 uppercase">Trip</span>
+        </button>
+        <button onclick="showSection('packing')" id="nav-packing" class="flex flex-col items-center p-3 text-slate-400 transition-all">
+            <i class="fas fa-suitcase text-xl"></i>
+            <span class="text-[9px] font-black mt-1 uppercase">Pack</span>
+        </button>
+        <button onclick="showSection('japanese')" id="nav-japanese" class="flex flex-col items-center p-3 text-slate-400 transition-all">
+            <i class="fas fa-language text-xl"></i>
+            <span class="text-[9px] font-black mt-1 uppercase">Talk</span>
+        </button>
+        <button onclick="showSection('tips')" id="nav-tips" class="flex flex-col items-center p-3 text-slate-400 transition-all">
+            <i class="fas fa-lightbulb text-xl"></i>
+            <span class="text-[9px] font-black mt-1 uppercase">Info</span>
+        </button>
+    </nav>
+
+    <script>
+        const itinerary = {
+            1: { title: "南部登陸之日", spots: [
+                { time: "09:15", act: "抵達那霸機場", map: "-", note: "出關、領行李、前往租車接駁區" },
+                { time: "11:00", act: "取車自駕開始", map: "232 543 430", note: "確認車況、譯本準備" },
+                { time: "12:30", act: "瀨長島 Umikaji Terrace", map: "33 002 602", note: "海景鬆餅時間" },
+                { time: "15:00", act: "玉泉洞 & 王國村", map: "232 495 330", note: "看鐘乳石、琉球玻璃體驗" }
+            ]},
+            2: { title: "北上櫻花巡禮", spots: [
+                { time: "09:30", act: "八重岳櫻之森公園", map: "206 830 214", note: "2月限定寒緋櫻祭" },
+                { time: "13:00", act: "美麗海水族館", map: "553 075 797", note: "黑潮之海大水槽餵食秀" }
+            ]},
+            3: { title: "蔚藍絕景大橋", spots: [
+                { time: "10:00", act: "古宇利大橋/心形岩", map: "485 692 126", note: "必吃蝦蝦飯 Kouri Shrimp" },
+                { time: "15:30", act: "萬座毛夕陽", map: "206 312 039", note: "象鼻岩地標拍照" }
+            ]},
+            4: { title: "賞鯨與美式風情", spots: [
+                { time: "08:30", act: "北谷賞鯨行程", map: "33 615 160", note: "冬限定，需提前預約" },
+                { time: "13:00", act: "美國村 American Village", map: "33 526 452", note: "充滿異國感的百貨商圈" }
+            ]},
+            5: { title: "最後衝刺回台", spots: [
+                { time: "09:00", act: "波上宮神社", map: "33 185 023", note: "崖上神社、買御守保平安" },
+                { time: "11:30", act: "國際通/公設市場", map: "-", note: "最後伴手禮採買" },
+                { time: "18:15", act: "回程報到", map: "-", note: "TigerAir IT231 回台" }
+            ]}
+        };
+
+        const packingList = [
+            { category: "重要證件", items: ["護照 (效期6個月)", "機票電子檔", "日文譯本駕照", "台灣駕照正本", "信用卡 (1-2張)"] },
+            { category: "交通支付", items: ["IC卡 (Suica/ICOCA)", "Apple Pay 設定", "日圓現金", "行動電源 (必帶)"] },
+            { category: "通訊電子", items: ["eSIM / SIM 卡", "充電線/轉接頭", "相機/腳架"] },
+            { category: "保暖防禦", items: ["羽絨外套", "發熱衣", "保濕乳液/護唇膏", "防護口罩"] }
+        ];
+
+        const phrases = [
+            { jp: "すみません (Sumimasen)", cn: "不好意思/請問", type: "萬用" },
+            { jp: "これをください (Kore o kudasai)", cn: "請給我這個 (點餐)", type: "餐廳" },
+            { jp: "お会計お願いします (Okaikei onegaishimasu)", cn: "請結帳", type: "購物" },
+            { jp: "助けてください (Tasukete kudasai)", cn: "請幫幫我 (緊急)", type: "求救" }
+        ];
+
+        function showSection(id) {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
+            
+            document.querySelectorAll('nav button').forEach(n => n.classList.remove('active-tab', 'text-slate-400'));
+            const activeBtn = document.getElementById('nav-' + id);
+            activeBtn.classList.add('active-tab');
+            
+            // 只有 overview 需要顯示機票卡片，其餘隱藏增加閱讀空間
+            document.getElementById('flight-info').style.display = (id === 'overview' ? 'block' : 'none');
+            window.scrollTo(0, 0);
+        }
+
+        function showDay(num) {
+            document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`day${num}-btn`).classList.add('active');
+
+            const data = itinerary[num];
+            let html = `<div class="p-2 font-black text-slate-800 text-lg mb-2">DAY ${num} : ${data.title}</div>`;
+            
+            data.spots.forEach(spot => {
+                html += `
+                    <div class="glass p-5 rounded-[28px] flex gap-4 items-start relative overflow-hidden group">
+                        <div class="text-[10px] font-black text-sky-600 bg-sky-50 px-2 py-1 rounded-lg shrink-0">${spot.time}</div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-slate-800 mb-1">${spot.act}</h4>
+                            <p class="text-xs text-slate-400 leading-relaxed">${spot.note}</p>
+                            ${spot.map !== '-' ? `
+                                <div onclick="copyText('${spot.map}')" class="mt-3 inline-flex items-center gap-2 bg-slate-800 text-white text-[9px] px-3 py-1.5 rounded-full cursor-pointer active:scale-95 transition-all">
+                                    <i class="fas fa-copy"></i> MAPCODE: ${spot.map}
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('day-content').innerHTML = html;
+        }
+
+        function initPacking() {
+            let html = "";
+            packingList.forEach(cat => {
+                html += `<div class="glass p-6 rounded-[32px]">
+                    <h3 class="font-black text-sm text-sky-500 mb-4 uppercase tracking-widest">${cat.category}</h3>
+                    <div class="space-y-3">
+                        ${cat.items.map((item, idx) => `
+                            <div class="flex items-center gap-3">
+                                <input type="checkbox" id="check-${cat.category}-${idx}" class="custom-checkbox w-5 h-5 rounded-full border-slate-200">
+                                <label for="check-${cat.category}-${idx}" class="text-sm font-medium text-slate-700">${item}</label>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>`;
+            });
+            document.getElementById('packing-container').innerHTML = html;
+        }
+
+        function initJapanese() {
+            let html = "";
+            phrases.forEach(p => {
+                html += `<div class="glass p-5 rounded-[24px] flex justify-between items-center">
+                    <div>
+                        <p class="font-bold text-slate-800">${p.jp}</p>
+                        <p class="text-xs text-slate-400 mt-1">${p.cn}</p>
+                    </div>
+                    <span class="text-[9px] font-black bg-slate-100 px-2 py-1 rounded-md text-slate-400 uppercase">${p.type}</span>
+                </div>`;
+            });
+            document.getElementById('japanese-container').innerHTML = html;
+        }
+
+        function copyText(text) {
+            const el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            
+            // 簡單的反饋
+            const msg = document.createElement('div');
+            msg.innerText = "已複製 MapCode";
+            msg.className = "fixed top-10 left-1/2 -translate-x-1/2 bg-slate-800 text-white px-4 py-2 rounded-full text-xs z-[100] animate-bounce";
+            document.body.appendChild(msg);
+            setTimeout(() => msg.remove(), 2000);
+        }
+
+        window.onload = () => {
+            showDay(1);
+            initPacking();
+            initJapanese();
+        };
     </script>
 </body>
 </html>
